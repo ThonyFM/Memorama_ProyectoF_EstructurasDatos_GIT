@@ -33,6 +33,7 @@ namespace Memorama_ProyectoF_EstructurasDatos
                     Console.WriteLine("Dijite la cantidad de columas para el memorama");
                     columnas = Convert.ToInt32(Console.ReadLine());
                     seguro = false;
+                 
                 }
                 catch (Exception ex)
                 {
@@ -43,11 +44,18 @@ namespace Memorama_ProyectoF_EstructurasDatos
                 if (!seguro)
                 {
                     if (columnas >= 4 )
-                    { 
+                    {
+                            if (columnas % 2 == 0){}
+                            else 
+                            {
+                                seguro = true;
+                                Console.WriteLine("\n**Solo se puede dijita un numero par**");
+                            }   
                     }
                     else
                     {
                         seguro = true;
+                        Console.WriteLine("\n**Solo se puede dijita un numero mayor que 4**");
                     }     
                 }
             } while (seguro);
@@ -56,7 +64,7 @@ namespace Memorama_ProyectoF_EstructurasDatos
             {
                 try
                 {
-                    Console.WriteLine("Dijite la cantidad de columas para el memorama");
+                    Console.WriteLine("Dijite la cantidad de filas para el memorama");
                     filas = Convert.ToInt32(Console.ReadLine());
                     seguro = false;
                 }
@@ -75,28 +83,7 @@ namespace Memorama_ProyectoF_EstructurasDatos
                 }
             } while (seguro);
 
-            do
-            {
-                try
-                {
-                    Console.WriteLine("Dijite la cantidad de columas para el memorama");
-                    filas = Convert.ToInt32(Console.ReadLine());
-                    seguro = false;
-                }
-                catch (Exception ex)
-                {
-                    seguro = true;
-                    Console.WriteLine("\n**Error: " + ex.Message + "**");
-                    Console.WriteLine("\n**Solo se puede dijita un numero par y mayor que 4**");
-                }
-                if (!seguro)
-                {
-                    if (filas < 4)
-                    {
-                        seguro = true;
-                    }
-                }
-            } while (seguro);
+   
 
             Console.ReadKey();
         }
