@@ -109,7 +109,11 @@ namespace Memorama_ProyectoF_EstructurasDatos.Modelo
         {
             if (c1 == c2)
             {
-               Console.WriteLine("");
+               Console.WriteLine("Correcto!!!");
+            }
+            else
+            {
+                Console.WriteLine("Fallaste");
             }
       
         }

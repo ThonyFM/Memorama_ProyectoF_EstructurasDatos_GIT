@@ -17,7 +17,9 @@ namespace Memorama_ProyectoF_EstructurasDatos
             int columnas=0;
             int filas=0;
             bool seguro;
-            
+            int parejas;
+            int contador;
+            int turnos;
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
             //Codigo
@@ -93,15 +95,25 @@ namespace Memorama_ProyectoF_EstructurasDatos
             } while (seguro);
 
             string[,] carasR = GenerarMemorama(filas, columnas);
-
-            for (int i = 0; i < filas; i++)
+            string[,] carasO = GenerarMemoramaOculto(filas, columnas);
+            parejas = (filas * columnas) / 2;
+            turnos= (filas * columnas) * 2;
+            contador =0;
+            do
             {
-                for (int z = 0; z < columnas; z++)
+                for (int i = 0; i < filas; i++)
                 {
-                    Console.Write(carasR[i, z] + " ");
+                    for (int z = 0; z < columnas; z++)
+                    {
+                        Console.Write(carasO[i, z] + " ");
+
+                    }
+                    Console.WriteLine("");
                 }
-                Console.WriteLine("");
-            }
+                Console.Clear();
+                Console.WriteLine("\n1.Turnos disoponibles: "+turnos+"\n2.Comodines Disponibles: " + turnos);
+                Console.WriteLine("\n\n1.Ingresar cordenas\n2.Usar comidin");
+            } while (parejas>contador);
             Console.ReadKey();
         }
       
