@@ -19,7 +19,12 @@ namespace Memorama_ProyectoF_EstructurasDatos
             bool seguro;
             int parejas;
             int contador;
-            int turnos;
+            int turnos, turnosU;
+            int comodines;
+            int f1, f2, c1, c2;
+            int op;
+
+            
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
             //Codigo
@@ -99,20 +104,33 @@ namespace Memorama_ProyectoF_EstructurasDatos
             parejas = (filas * columnas) / 2;
             turnos= (filas * columnas) * 2;
             contador =0;
+            turnosU = 0;
+            comodines = 3;
+            seguro = true;
             do
             {
-                for (int i = 0; i < filas; i++)
+                if (turnos> turnosU)
                 {
-                    for (int z = 0; z < columnas; z++)
+                    for (int i = 0; i < filas; i++)
                     {
-                        Console.Write(carasO[i, z] + " ");
+                        for (int z = 0; z < columnas; z++)
+                        {
+                            Console.Write(carasO[i, z] + " ");
 
+                        }
+                        Console.WriteLine("");
                     }
-                    Console.WriteLine("");
+                    Console.Clear();
+                    Console.WriteLine("\n1.Turnos disoponibles: " + turnos + "\n2.Comodines Disponibles: " + comodines);
+                    Console.WriteLine("\n\n1.Ingresar cordenas\n2.Usar comidin");
+
+                    //seguir 
                 }
-                Console.Clear();
-                Console.WriteLine("\n1.Turnos disoponibles: "+turnos+"\n2.Comodines Disponibles: " + turnos);
-                Console.WriteLine("\n\n1.Ingresar cordenas\n2.Usar comidin");
+                else
+                {
+                    contador = parejas;
+                    seguro = false;
+                }
             } while (parejas>contador);
             Console.ReadKey();
         }
