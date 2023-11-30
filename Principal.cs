@@ -22,9 +22,11 @@ namespace Memorama_ProyectoF_EstructurasDatos
             int turnos, turnosU;
             int comodines;
             int f1, f2, c1, c2;
-            int op;
+            int op=0;
+            bool victoria;
 
-            
+
+
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
             //Codigo
@@ -106,30 +108,61 @@ namespace Memorama_ProyectoF_EstructurasDatos
             contador =0;
             turnosU = 0;
             comodines = 3;
-            seguro = true;
+            victoria = true;
             do
             {
                 if (turnos> turnosU)
                 {
-                    for (int i = 0; i < filas; i++)
+                    
+                    do
                     {
-                        for (int z = 0; z < columnas; z++)
+                        try
                         {
-                            Console.Write(carasO[i, z] + " ");
-
+                            Console.Clear();
+                            for (int i = 0; i < filas; i++)
+                            {
+                                for (int z = 0; z < columnas; z++)
+                                {
+                                    Console.Write(carasO[i, z] + " ");
+                                }
+                                Console.WriteLine("");
+                            }
+                            Console.WriteLine("\n1.Turnos disoponibles: " + turnos + "\n2.Comodines Disponibles: " + comodines);
+                            Console.WriteLine("\n\n1.Ingresar cordenas\n2.Usar comidin");
+                            op = Convert.ToInt32(Console.ReadLine());
+                            seguro = false;
                         }
-                        Console.WriteLine("");
-                    }
-                    Console.Clear();
-                    Console.WriteLine("\n1.Turnos disoponibles: " + turnos + "\n2.Comodines Disponibles: " + comodines);
-                    Console.WriteLine("\n\n1.Ingresar cordenas\n2.Usar comidin");
+                        catch (Exception ex)
+                        {
+                            seguro = true;
+                            Console.WriteLine("\n**Error: " + ex.Message + "**");
+                            Console.WriteLine("\n**Dijite el numero de la opcion**");
+                        }
+                        if (!seguro)
+                        {
+                                switch (op)
+                                {
+                                    case 1:
 
-                    //seguir 
+                                        break;
+                                    case 2:
+
+                                        break;
+                                    default:
+
+                                    seguro = true;
+                                    Console.WriteLine("\n**Dijite una opcion valida**");
+                                    break;
+                                }
+                            }
+                         
+                        
+                    } while (seguro);
                 }
                 else
                 {
                     contador = parejas;
-                    seguro = false;
+                    victoria = false;
                 }
             } while (parejas>contador);
             Console.ReadKey();
