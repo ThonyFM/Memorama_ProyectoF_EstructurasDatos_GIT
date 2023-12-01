@@ -146,6 +146,7 @@ namespace Memorama_ProyectoF_EstructurasDatos
                                     if (comodines>0)
                                     {
                                         turnos--;
+                                        turnosU++;
                                         comodines--;
                                         Comodin(columnas, filas, carasO, carasR,turnos,comodines,op);
 
