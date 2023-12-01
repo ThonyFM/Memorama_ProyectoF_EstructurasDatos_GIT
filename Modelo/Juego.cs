@@ -88,32 +88,37 @@ namespace Memorama_ProyectoF_EstructurasDatos.Modelo
 
             return oculto;
         }
-        protected static void VoltearCara(int c, int f, string[,] o, string[,] d)
+        protected static void VoltearCara(int columnas, int filas, int c, int f, string[,] o, string[,] d, bool seguro)
         {
             if (o[f, c] == "*")
             {
                 o[f, c] = d[f, c];
+                GenerarTabla(filas, columnas, o);
+                seguro = false;
             }
             else
             {
-                Console.WriteLine("\n**Cara ya volteada**");
+                seguro = true;
             }
         }
         protected static void VoltearTapas(int c1, int f1, int c2, int f2, string[,] o, string[,] d)
         {
-            Thread.Sleep(3000);
-            d[f1, c1] = "*";
-            d[f2, c2] = "*";
+            o[f1, c1] = "*";
+            o[f2, c2] = "*";
         }
-        protected static void ComprobarParejas(string c1, string c2)
+        protected static bool ComprobarParejas(string c1, string c2)
         {
             if (c1 == c2)
             {
                 Console.WriteLine("Correcto!!!");
+                Thread.Sleep(1000);
+                return true;
             }
             else
             {
                 Console.WriteLine("Fallaste");
+                Thread.Sleep(1000);
+                return false;
             }
 
         }
@@ -124,15 +129,12 @@ namespace Memorama_ProyectoF_EstructurasDatos.Modelo
             do
             {
                 seguro = false;
-                int co = rnd.Next(0, c);
-                int fi = rnd.Next(0, f);
+                int co = rnd.Next(0, (c-1));
+                int fi = rnd.Next(0, (f-1));
 
                 if (o[fi, co] == "*")
                 {
-                    VoltearCara(co, fi, o, d);
-                    Console.Clear();
-                    for (int i = 0; i < f; i++)
-                        GenerarTabla(f, c, o);
+                    VoltearCara(c,f,co, fi, o, d,seguro);
                     Thread.Sleep(3000);
                     o[fi, co] = "*";
                     
@@ -146,7 +148,6 @@ namespace Memorama_ProyectoF_EstructurasDatos.Modelo
         }
         protected static void GenerarTabla(int filas, int columnas, string[,] carasO)
         {
-
             bool seguro;
             Console.Clear();
             Console.Write("  ");
