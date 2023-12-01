@@ -18,7 +18,7 @@ namespace Memorama_ProyectoF_EstructurasDatos.Modelo
             Random aleatorio = new Random();
             string a;
             string[,] orden = new string[f, c];
-          
+
             //Codigo
             contador = 0;
             //se Guardan los elementos necesarios 
@@ -44,14 +44,14 @@ namespace Memorama_ProyectoF_EstructurasDatos.Modelo
                     lista[contador] = ("♠");
                     contador++;
                 }
-                catch (Exception )
+                catch (Exception)
                 {
 
                     break;
                 }
-               
-              
-             
+
+
+
             }
             for (int i = 0; i < tamanho; i++)
             {
@@ -88,11 +88,11 @@ namespace Memorama_ProyectoF_EstructurasDatos.Modelo
 
             return oculto;
         }
-        protected static void VoltearCara(int c, int f, string[,] o , string[,] d)
+        protected static void VoltearCara(int c, int f, string[,] o, string[,] d)
         {
-            if (d[f, c] == "*")
+            if (o[f, c] == "*")
             {
-                d[f, c] = o[f, c];
+                o[f, c] = d[f, c];
             }
             else
             {
@@ -100,7 +100,7 @@ namespace Memorama_ProyectoF_EstructurasDatos.Modelo
             }
         }
         protected static void VoltearTapas(int c1, int f1, int c2, int f2, string[,] o, string[,] d)
-        { 
+        {
             Thread.Sleep(3000);
             d[f1, c1] = "*";
             d[f2, c2] = "*";
@@ -109,14 +109,57 @@ namespace Memorama_ProyectoF_EstructurasDatos.Modelo
         {
             if (c1 == c2)
             {
-               Console.WriteLine("Correcto!!!");
+                Console.WriteLine("Correcto!!!");
             }
             else
             {
                 Console.WriteLine("Fallaste");
             }
-      
-        }
 
+        }
+        protected static void Comodin(int c, int f, string[,] o, string[,] d, int turnos, int comodines, int op)
+        {
+            Random rnd = new Random();
+            bool seguro;
+            do
+            {
+                seguro = false;
+                int co = rnd.Next(0, c);
+                int fi = rnd.Next(0, f);
+
+                if (o[fi, co] == "*")
+                {
+                    VoltearCara(co, fi, o, d);
+                    Console.Clear();
+                    for (int i = 0; i < f; i++)
+                        GenerarTabla(f, c, o);
+                    Thread.Sleep(3000);
+                    o[fi, co] = "*";
+                    
+                }
+                else
+                {
+                    seguro = true;
+                }
+            } while (seguro);
+
+        }
+        protected static void GenerarTabla(int filas, int columnas, string[,] carasO)
+        {
+            bool seguro;
+
+
+            Console.Clear();
+            for (int i = 0; i < filas; i++)
+            {
+                for (int z = 0; z < columnas; z++)
+                {
+                    Console.Write(carasO[i, z] + " ");
+                }
+                Console.WriteLine("");
+            }
+   
+
+        }
     }
 }

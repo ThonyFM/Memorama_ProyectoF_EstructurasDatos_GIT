@@ -8,11 +8,12 @@ using System.Threading.Tasks;
 
 namespace Memorama_ProyectoF_EstructurasDatos
 {
-    internal class Principal: Juego
+    internal class Principal:Juego
     {
     
         static void Main(string[] args)
         {
+    
             //Variables
             int columnas=0;
             int filas=0;
@@ -118,15 +119,9 @@ namespace Memorama_ProyectoF_EstructurasDatos
                     {
                         try
                         {
+
                             Console.Clear();
-                            for (int i = 0; i < filas; i++)
-                            {
-                                for (int z = 0; z < columnas; z++)
-                                {
-                                    Console.Write(carasO[i, z] + " ");
-                                }
-                                Console.WriteLine("");
-                            }
+                            GenerarTabla(filas, columnas, carasO);
                             Console.WriteLine("\n1.Turnos disoponibles: " + turnos + "\n2.Comodines Disponibles: " + comodines);
                             Console.WriteLine("\n\n1.Ingresar cordenas\n2.Usar comidin");
                             op = Convert.ToInt32(Console.ReadLine());
@@ -138,6 +133,8 @@ namespace Memorama_ProyectoF_EstructurasDatos
                             Console.WriteLine("\n**Error: " + ex.Message + "**");
                             Console.WriteLine("\n**Dijite el numero de la opcion**");
                         }
+               
+                 
                         if (!seguro)
                         {
                                 switch (op)
@@ -146,12 +143,25 @@ namespace Memorama_ProyectoF_EstructurasDatos
 
                                         break;
                                     case 2:
+                                    if (comodines>0)
+                                    {
+                                        turnos--;
+                                        comodines--;
+                                        Comodin(columnas, filas, carasO, carasR,turnos,comodines,op);
+
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("\n**Sin turnos disponibles**");
+                                        Thread.Sleep(2000);
+                                    }
 
                                         break;
                                     default:
 
-                                    seguro = true;
+                                   
                                     Console.WriteLine("\n**Dijite una opcion valida**");
+                                    seguro = true;
                                     break;
                                 }
                             }
