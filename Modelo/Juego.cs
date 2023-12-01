@@ -146,20 +146,58 @@ namespace Memorama_ProyectoF_EstructurasDatos.Modelo
         }
         protected static void GenerarTabla(int filas, int columnas, string[,] carasO)
         {
+
             bool seguro;
-
-
             Console.Clear();
+            Console.Write("  ");
+           
+            for (int j = 1; j <= columnas; j++)
+            {
+                Console.Write($"{j} ");
+            }
+            Console.WriteLine();
             for (int i = 0; i < filas; i++)
             {
+                Console.Write($"{i + 1} ");
                 for (int z = 0; z < columnas; z++)
                 {
-                    Console.Write(carasO[i, z] + " ");
+                    Console.Write($"{carasO[i, z]} " );
                 }
                 Console.WriteLine("");
             }
    
 
         }
+        static void MostrarTablero(int filas, int columnas, char[,] tablero, bool[,] cartasReveladas)
+        {
+            Console.OutputEncoding = System.Text.Encoding.UTF8; // Cambiar la codificación de la consola a UTF-8
+            Console.WriteLine("Tablero:");
+            Console.Write("  ");
+            for (int j = 1; j <= columnas; j++)
+            {
+                Console.Write($"{j} ");
+            }
+            Console.WriteLine();
+
+            for (int i = 0; i < filas; i++)
+            {
+                Console.Write($"{i + 1} ");
+                for (int j = 0; j < columnas; j++)
+                {
+                    if (cartasReveladas[i, j])
+                    {
+                        Console.Write($"{tablero[i, j]} ");
+                    }
+                    else
+                    {
+                        Console.Write("* ");
+                    }
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+        }
+
+
     }
 }
