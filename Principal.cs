@@ -13,7 +13,7 @@ namespace Memorama_ProyectoF_EstructurasDatos
 {
     internal class Principal:Juego
     {
-    
+
         static void Main(string[] args)
         {
             //Variables
@@ -22,9 +22,8 @@ namespace Memorama_ProyectoF_EstructurasDatos
             bool seguro;
             int parejas;
             int parejasA=0;
-            int contador;
             int turnos, turnosU;
-            int comodines;
+            int comodines=0;
             int f1 = 0;
             int f2 = 0;
             int c1 = 0;
@@ -32,6 +31,7 @@ namespace Memorama_ProyectoF_EstructurasDatos
             int op=0;
             string carta1;
             string carta2;
+            int desaciertos=0;
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
             //Codigo
@@ -103,27 +103,59 @@ namespace Memorama_ProyectoF_EstructurasDatos
                     }
                 }
             } while (seguro);
+            do
+            {
+                try
+                {
+                    Console.WriteLine("\nDijite la cantidad de comodines deseados");
+                    comodines = Convert.ToInt32(Console.ReadLine());
+                    seguro = false;
+                }
+                catch (Exception ex)
+                {
+                    seguro = true;
+                    Console.WriteLine("\n**Error: " + ex.Message + "**");
+                }
+                if (!seguro)
+                {
+                    if (comodines<0)
+                    {
+                        comodines = 0;
+                            Console.WriteLine("\n**El numero de comodines sera de 0**");
+                        Thread.Sleep(2000);
+                    }
+         
+                }
+            } while (seguro);
+           
             string[,] carasR = GenerarMemorama(filas, columnas);
             string[,] carasO = GenerarMemoramaOculto(filas, columnas);
             parejas = (filas * columnas) / 2;
-            turnos= (filas * columnas) * 2;
-            contador =0;
+            turnos= (filas * columnas) * 2 -5;
             turnosU = 0;
-            comodines = 4;
             do
             {
                 if (turnos> turnosU)
                 {
-                    
                     do
                     {
                         try
                         {
                             GenerarTabla(filas, columnas, carasO);
-                            Console.WriteLine("\n1.Turnos disoponibles: " + turnos + "\n2.Comodines Disponibles: " + comodines);
-                            Console.WriteLine("\n\n1.Ingresar cordenas\n2.Usar comidin");
-                            op = Convert.ToInt32(Console.ReadLine());
-                            seguro = false;
+                            Console.WriteLine("\nTurnos disoponibles: " + (turnos-turnosU) + 
+                                "\nComodines Disponibles: " + comodines+
+                                "\nDesaciertos: "+ desaciertos+
+                                "\nAciertos: " +parejasA);
+                            if (comodines > 0)
+                            {
+                                Console.WriteLine("\n\n1.Ingresar cordenas\n2.Usar comidin");
+                                op = Convert.ToInt32(Console.ReadLine());
+                                seguro = false;
+                            }
+                            else
+                            {
+                                op = 1;
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -133,7 +165,7 @@ namespace Memorama_ProyectoF_EstructurasDatos
                         }
                         if (!seguro)
                         {
-                                switch (op)
+                            switch (op)
                             {
                                 case 1:
                                     do
@@ -156,14 +188,20 @@ namespace Memorama_ProyectoF_EstructurasDatos
                                             Thread.Sleep(2000);
                                             GenerarTabla(filas, columnas, carasO);
                                         }
-                                        if (f1<filas&&c2<columnas)
+                                        if (f1<filas&&c1<columnas&seguro==false)
                                         {
-                                            VoltearCara(columnas, filas, c1, f1, carasO, carasR, seguro);
-                                            if (seguro == true)
+                                            
+                                            if (carasO[f1,c1] == "*")
                                             {
+                                                VoltearCara(columnas, filas, c1, f1, carasO, carasR);
+                                            }
+                                            else
+                                            {
+                                                seguro = true;
                                                 Console.WriteLine("\n**Esta carta ya esta volteada**");
                                                 Thread.Sleep(2000);
                                                 GenerarTabla(filas, columnas, carasO);
+
                                             }
                                         }
                                         else
@@ -173,7 +211,6 @@ namespace Memorama_ProyectoF_EstructurasDatos
                                             Thread.Sleep(2000);
                                             GenerarTabla(filas, columnas, carasO);
                                         }
-                                   
                                     } while (seguro);
                                     do
                                     {
@@ -198,14 +235,27 @@ namespace Memorama_ProyectoF_EstructurasDatos
                                         if (!seguro)
                                         {
                                            
-                                            if (f1==f2&& c1==c2)
+                                            if (f1==f2&& c1==c2 )
                                             {
                                                 seguro = true;
                                                 Console.WriteLine("\n**No se pueden dijitar las mismas coordenadas en ambas cartas**");
                                                 Thread.Sleep(2000);
                                                 GenerarTabla(filas, columnas, carasO);
                                             }
-                                            VoltearCara(columnas,filas,c2, f2, carasO, carasR, seguro);
+                                            if (f2 < filas && c2 < columnas & seguro == false)
+                                            {
+                                                if (carasO[f2, c2] == "*")
+                                                {
+                                                    VoltearCara(columnas, filas, c2, f2, carasO, carasR);
+                                                }
+                                                else
+                                                {
+                                                    seguro = true;
+                                                    Console.WriteLine("\n**Esta carta ya esta volteada**");
+                                                    Thread.Sleep(2000);
+                                                    GenerarTabla(filas, columnas, carasO);
+                                                }
+                                            }
                                             if(seguro==true)
                                             {
                                                 Console.WriteLine("\n**Esta carta ya esta volteada**");
@@ -218,56 +268,49 @@ namespace Memorama_ProyectoF_EstructurasDatos
                                     carta2 = carasR[f2, c2];
                                     if (ComprobarParejas(carta1, carta2))
                                     {
-                                        turnos--;
                                         turnosU++;
                                         parejasA++;;
                                     }
                                     else
-                                    {
-                                        turnos--;
+                                    {                 
                                         turnosU++;
+                                        desaciertos++;
                                         VoltearTapas(c1, f1, c2, f2, carasO, carasR);
                                     }
-                                    break;
-                                    case 2:
-                                    if (comodines>0)
-                                    {
-                                        turnos--;
-                                        turnosU++;
-                                        comodines--;
-                                        Comodin(columnas, filas, carasO, carasR,turnos,comodines,op);
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("\n**Sin turnos disponibles**");
-                                        Thread.Sleep(2000);
-                                    }
-                                        break;
-                                    default:
+                                  
+                                break;
+                                case 2:
+                                    comodines--;
+                                    Comodin(columnas, filas, carasO, carasR,turnos,comodines,op);
+                                break;
+                                default:
                                     Console.WriteLine("\n**Dijite una opcion valida**");
+                                    Thread.Sleep(2000);
                                     seguro = true;
-                                    break;
+                                break;
                                 }
                             }
                     } while (seguro);
                 }
-                else
-                {
-                    contador = parejas;
-                }
-            } while (parejas>contador);
-
+            } while (parejas>parejasA);
             if (parejas == parejasA)
             {
                 GenerarTabla(filas, columnas, carasO);
                 Console.WriteLine("\nGanaste");
                 Console.WriteLine("\nEstadisticas:" +
-                    "\nTurnos usados: "+turnosU+"/"+(turnos+turnosU)+
-                    "\nAciertos: "+ parejasA+"/"+parejas);
+                    "\nTurnos usados: "+turnosU+"/"+
+                    turnos+
+                    "\nAciertos: "+ parejasA+"/"+parejas
+                    + "\nDesaciertos: " + desaciertos);
             }
             else
             {
+                GenerarTabla(filas, columnas, carasO);
                 Console.WriteLine("\nPerdiste");
+                Console.WriteLine("\nEstadisticas:" +
+                    "\nTurnos usados: " + turnosU + "/" + turnos+
+                    "\nAciertos: " + parejasA + "/" + parejas
+                    + "\nDesaciertos: " + desaciertos );
             }
             Console.ReadKey();
         }

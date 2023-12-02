@@ -24,7 +24,6 @@ namespace Memorama_ProyectoF_EstructurasDatos.Modelo
             //se Guardan los elementos necesarios 
             while (contador < tamanho)
             {
-
                 try
                 {
                     lista[contador] = ("♥");
@@ -88,17 +87,13 @@ namespace Memorama_ProyectoF_EstructurasDatos.Modelo
 
             return oculto;
         }
-        protected static void VoltearCara(int columnas, int filas, int c, int f, string[,] o, string[,] d, bool seguro)
+        protected static void VoltearCara(int columnas, int filas, int c, int f, string[,] o, string[,] d)
         {
-            if (o[f, c] == "*")
+            if (o[f, c] == ("*"))
             {
                 o[f, c] = d[f, c];
                 GenerarTabla(filas, columnas, o);
-                seguro = false;
-            }
-            else
-            {
-                seguro = true;
+               
             }
         }
         protected static void VoltearTapas(int c1, int f1, int c2, int f2, string[,] o, string[,] d)
@@ -134,7 +129,7 @@ namespace Memorama_ProyectoF_EstructurasDatos.Modelo
 
                 if (o[fi, co] == "*")
                 {
-                    VoltearCara(c,f,co, fi, o, d,seguro);
+                    VoltearCara(c,f,co, fi, o, d);
                     Thread.Sleep(3000);
                     o[fi, co] = "*";
                     
@@ -171,7 +166,7 @@ namespace Memorama_ProyectoF_EstructurasDatos.Modelo
         }
         static void MostrarTablero(int filas, int columnas, char[,] tablero, bool[,] cartasReveladas)
         {
-            Console.OutputEncoding = System.Text.Encoding.UTF8; // Cambiar la codificación de la consola a UTF-8
+            Console.OutputEncoding = System.Text.Encoding.UTF8; 
             Console.WriteLine("Tablero:");
             Console.Write("  ");
             for (int j = 1; j <= columnas; j++)
@@ -198,7 +193,5 @@ namespace Memorama_ProyectoF_EstructurasDatos.Modelo
             }
             Console.WriteLine();
         }
-
-
     }
 }
